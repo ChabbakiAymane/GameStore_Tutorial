@@ -2,8 +2,13 @@ using Gamestore.Api.Entities;
 
 namespace Gamestore.Api.Repositories;
 
-public class InMemGameRepository
+// Dopo aver generato l'interfaccia, la classe InMemGameRepository implementa l'interfaccia IInMemGameRepository
+// Sposto l'interfaccia in un file separato (ctrl+. -> Move type to IGamesRepository.cs)
+public class InMemGameRepository : IGamesRepository
 {
+    // Per dargli una struttura da dependency injection, creo una view estraendo l'interfaccia
+    // su InMemGameRepository -> ctrl+. -> Extract Interface
+    
     // Dichiarazione della lista di giochi in-memory
     private readonly List<Game> games = new()
     {

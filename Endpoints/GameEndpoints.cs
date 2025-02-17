@@ -19,17 +19,22 @@ public static class GamesEndpoints
         // Aggiunta MinimalApis.Extensions, la abilito per il group tramite WithParameterValidation()
 
         // Una volta creata la classe InMemGameRepository, devo definire l'istanza che la utilizza
-        InMemGameRepository repository = new();
+        // Dopo aver creato la classe IGamesRepository, tolgo questa definizione
+        // InMemGameRepository repository = new();
+        // Ora devo injectare la repository all'interno del costruttore di GamesEndpoints
+
         // Ora cambio tutte i riferimenti a 'games' con 'repository.x()' dove x è la funzione che mi serve
         var group = routes.MapGroup("/games").WithParameterValidation();
 
         // Definizione di ENDPOINTS
         // GET /games: Restituisce la lista di tutti i giochi
         // group.MapGet("/", () => games);
-        group.MapGet("/", () => repository.GetAll());
+
+        // Faccio injection della repository IGamesRepository
+        group.MapGet("/", (IGamesRepository repository) => repository.GetAll());
 
         // GET /games/{id}: Restituisce il gioco con id = {id}
-        group.MapGet("/{id}", (int id) => 
+        group.MapGet("/{id}", (IGamesRepository repository, int id) => 
         {
             // Cerco il gioco con id = {id} (se non presente, con ? accetto null)
             // Game? gametoFind = games.Find(game => game.Id == id);
@@ -47,7 +52,8 @@ public static class GamesEndpoints
         }).WithName(getGameEndpointName);
 
         // POST /games: Crea un nuovo gioco e restituisce URL del gioco creato
-        group.MapPost("/", (Game GameCreated) => 
+        // Faccio injection della repository IGamesRepository
+        group.MapPost("/", (IGamesRepository repository, Game GameCreated) => 
         {
             // Tra tutti i giochi, trovo id più grande e lo incremento
             // GameCreated.Id = games.Max(game => game.Id) + 1;
@@ -59,7 +65,8 @@ public static class GamesEndpoints
         });
 
         // PUT /games/{id}: Aggiorna il gioco con id = {id}
-        group.MapPut("/{id}", (int id, Game updatedGame) => 
+        // Faccio injection della repository IGamesRepository
+        group.MapPut("/{id}", (IGamesRepository repository, int id, Game updatedGame) => 
         {
             // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
             // Game? gametoUpdate = games.Find(game => game.Id == id);
@@ -85,7 +92,8 @@ public static class GamesEndpoints
         });
 
         // DELETE /games/{id}: Elimina il gioco con id = {id}
-        group.MapDelete("/{id}", (int id) => {
+        // Faccio injection della repository IGamesRepository
+        group.MapDelete("/{id}", (IGamesRepository repository, int id) => {
             // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
             //Game? gameToDelete = games.Find(game => game.Id == id);
             Game? gameToDelete = repository.Get(id);
