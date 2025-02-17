@@ -18,4 +18,9 @@ var app = builder.Build();
 // Aggiorno il progetto dandoli una struttura per dependency injection con il repository pattern
 app.MapGamesEndpoints();
 
+// Aggiunto DTO per vincolare il contratto di scambio tra Server e Client ed evitare che
+// il Server invii dati che rompono il Client o dati di cui non ha bisogno (es. ID)
+// DTO specifica un contratto su come deve avvenire (aspettative/requisiti) lo scambio di dati tra Server e Client
+
+
 app.Run();

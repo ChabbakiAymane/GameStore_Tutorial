@@ -1,3 +1,4 @@
+using Gamestore.Api.DTOs;
 using Gamestore.Api.Entities;
 using Gamestore.Api.Repositories;
 
@@ -31,7 +32,10 @@ public static class GamesEndpoints
         // group.MapGet("/", () => games);
 
         // Faccio injection della repository IGamesRepository
-        group.MapGet("/", (IGamesRepository repository) => repository.GetAll());
+        // Una volta creati i metodi di conversione GameEntity in DTO-Entity, posso usare AsDto()
+        group.MapGet("/", (IGamesRepository repository) => 
+            // Prendo tutti i giochi, uno alla volta, e li converto in DTO
+            repository.GetAll().Select(game => game.AsDto()));
 
         // GET /games/{id}: Restituisce il gioco con id = {id}
         group.MapGet("/{id}", (IGamesRepository repository, int id) => 
@@ -39,7 +43,8 @@ public static class GamesEndpoints
             // Cerco il gioco con id = {id} (se non presente, con ? accetto null)
             // Game? gametoFind = games.Find(game => game.Id == id);
             Game? gametoFind = repository.Get(id);
-            return gametoFind is not null ? Results.Ok(gametoFind) : Results.NotFound();
+            // Restituisco il gioco come DTO
+            return gametoFind is not null ? Results.Ok(gametoFind.AsDto()) : Results.NotFound();
             /*if (gametoFind is null)
             {
                 // Restituisco risposta REST: 404 Not Found
@@ -53,8 +58,18 @@ public static class GamesEndpoints
 
         // POST /games: Crea un nuovo gioco e restituisce URL del gioco creato
         // Faccio injection della repository IGamesRepository
-        group.MapPost("/", (IGamesRepository repository, Game GameCreated) => 
+        // Non passo più Game GameCreated, ma CreateGameDto gameDto
+        group.MapPost("/", (IGamesRepository repository, CreateGameDto gameDto) => 
         {
+            // Devo costruire un Game Entity a partire da un gameDto
+            Game GameCreated = new()
+            {
+                Name = gameDto.Name,
+                Genre = gameDto.Genre,
+                Price = gameDto.Price,
+                ReleaseDate = gameDto.ReleaseDate,
+                ImageURI = gameDto.ImageURI
+            };
             // Tra tutti i giochi, trovo id più grande e lo incremento
             // GameCreated.Id = games.Max(game => game.Id) + 1;
             // games.Add(GameCreated);
@@ -66,7 +81,8 @@ public static class GamesEndpoints
 
         // PUT /games/{id}: Aggiorna il gioco con id = {id}
         // Faccio injection della repository IGamesRepository
-        group.MapPut("/{id}", (IGamesRepository repository, int id, Game updatedGame) => 
+        // Non passo più Game updatedGame, ma UpdateGameDto updatedGame
+        group.MapPut("/{id}", (IGamesRepository repository, int id, UpdateGameDto updatedGame) => 
         {
             // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
             // Game? gametoUpdate = games.Find(game => game.Id == id);
