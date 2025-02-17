@@ -35,12 +35,15 @@ List<Game> games = new()
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+// Utilizzo GROUPS per raggruppare gli ENDPOINTS
+var group = app.MapGroup("/games");
+
 // Definizione di ENDPOINTS
 // GET /games: Restituisce la lista di tutti i giochi
-app.MapGet("/games", () => games);
+group.MapGet("/", () => games);
 
 // GET /games/{id}: Restituisce il gioco con id = {id}
-app.MapGet("/games/{id}", (int id) => 
+group.MapGet("/{id}", (int id) => 
 {
     // Cerco il gioco con id = {id} (se non presente, con ? accetto null)
     Game? gametoFind = games.Find(game => game.Id == id);
@@ -56,7 +59,7 @@ app.MapGet("/games/{id}", (int id) =>
 }).WithName(getGameEndpointName);
 
 // POST /games: Crea un nuovo gioco e restituisce URL del gioco creato
-app.MapPost("/games", (Game GameCreated) => 
+group.MapPost("/", (Game GameCreated) => 
 {
     // Tra tutti i giochi, trovo id più grande e lo incremento
     GameCreated.Id = games.Max(game => game.Id) + 1;
@@ -67,7 +70,7 @@ app.MapPost("/games", (Game GameCreated) =>
 });
 
 // PUT /games/{id}: Aggiorna il gioco con id = {id}
-app.MapPut("/games/{id}", (int id, Game updatedGame) => 
+group.MapPut("/{id}", (int id, Game updatedGame) => 
 {
     // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
     Game? gametoUpdate = games.Find(game => game.Id == id);
@@ -88,7 +91,7 @@ app.MapPut("/games/{id}", (int id, Game updatedGame) =>
 });
 
 // DELETE /games/{id}: Elimina il gioco con id = {id}
-app.MapDelete("/games/{id}", (int id) => {
+group.MapDelete("/{id}", (int id) => {
     // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
     Game? gametoDelete = games.Find(game => game.Id == id);
     if (gametoDelete is not null)

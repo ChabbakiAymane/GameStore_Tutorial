@@ -26,3 +26,4 @@ C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\
 C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.pdb
 C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.genruntimeconfig.cache
 C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\ref\Gamestore.Api.dll
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.sourcelink.json
