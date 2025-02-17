@@ -1,4 +1,5 @@
 using Gamestore.Api.Entities;
+using Gamestore.Api.Repositories;
 
 namespace Gamestore.Api.Endpoints;
 
@@ -9,58 +10,38 @@ public static class GamesEndpoints
     //  - definizione degli endpoint REST (sotto)
     //  - costante del nome dell'endpoint
     const string getGameEndpointName = "GetGameById";
-    //  - dichiarazione della lista di giochi in-memory (static perchè la classe è static)
-    static List<Game> games = new()
-    {
-        new Game(){
-            Id = 1,
-            Name = "Street Fighter II",
-            Genre = "Fighting",
-            Price = 19.99M,
-            ReleaseDate = new DateTime(1991, 2, 1),
-            ImageURI = "https://placehold.co/100"
-        },
-        new Game(){
-            Id = 2,
-            Name = "Final Fantasy VII",
-            Genre = "Fighting",
-            Price = 39.99M,
-            ReleaseDate = new DateTime(2010, 9, 3),
-            ImageURI = "https://placehold.co/100"
-        },
-        new Game(){
-            Id = 3,
-            Name = "FIFA 23",
-            Genre = "Sports",
-            Price = 29.99M,
-            ReleaseDate = new DateTime(2022, 9, 27),
-            ImageURI = "https://placehold.co/100"
-        }
-    };
+    //  - lista di giochi in-memory (da dichiarare static, poi spostata in InMemGameRepository) 
 
-    // Ora i metodi li invoco più con 'app/group' ma con 'routes'
+    // Ora il metodo non lo invoco più con 'app' ma con 'routes' prima di usare 'group'
     public static RouteGroupBuilder MapGamesEndpoints(this IEndpointRouteBuilder routes)
     {   
         // Utilizzo GROUPS per raggruppare gli ENDPOINTS
         // Aggiunta MinimalApis.Extensions, la abilito per il group tramite WithParameterValidation()
+
+        // Una volta creata la classe InMemGameRepository, devo definire l'istanza che la utilizza
+        InMemGameRepository repository = new();
+        // Ora cambio tutte i riferimenti a 'games' con 'repository.x()' dove x è la funzione che mi serve
         var group = routes.MapGroup("/games").WithParameterValidation();
 
         // Definizione di ENDPOINTS
         // GET /games: Restituisce la lista di tutti i giochi
-        group.MapGet("/", () => games);
+        // group.MapGet("/", () => games);
+        group.MapGet("/", () => repository.GetAll());
 
         // GET /games/{id}: Restituisce il gioco con id = {id}
         group.MapGet("/{id}", (int id) => 
         {
             // Cerco il gioco con id = {id} (se non presente, con ? accetto null)
-            Game? gametoFind = games.Find(game => game.Id == id);
-            if (gametoFind is null)
+            // Game? gametoFind = games.Find(game => game.Id == id);
+            Game? gametoFind = repository.Get(id);
+            return gametoFind is not null ? Results.Ok(gametoFind) : Results.NotFound();
+            /*if (gametoFind is null)
             {
                 // Restituisco risposta REST: 404 Not Found
                 return Results.NotFound();
             }
             // Restituisco il gioco trovato
-            return Results.Ok(gametoFind);
+            return Results.Ok(gametoFind);*/
             // Assegno il nome "GetGameById" all'endpoint
             // Posso usarlo per invocare questo endpoint tramite CreatedAtRoute()
         }).WithName(getGameEndpointName);
@@ -69,8 +50,9 @@ public static class GamesEndpoints
         group.MapPost("/", (Game GameCreated) => 
         {
             // Tra tutti i giochi, trovo id più grande e lo incremento
-            GameCreated.Id = games.Max(game => game.Id) + 1;
-            games.Add(GameCreated);
+            // GameCreated.Id = games.Max(game => game.Id) + 1;
+            // games.Add(GameCreated);
+            repository.Create(GameCreated);
             // Restituisco risposta REST: 201 Created
             // Restituisco l'entità restituita dalla chiamata all'endpoint /games/{id}
             return Results.CreatedAtRoute(getGameEndpointName, new { id = GameCreated.Id }, GameCreated);
@@ -80,7 +62,8 @@ public static class GamesEndpoints
         group.MapPut("/{id}", (int id, Game updatedGame) => 
         {
             // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
-            Game? gametoUpdate = games.Find(game => game.Id == id);
+            // Game? gametoUpdate = games.Find(game => game.Id == id);
+            Game? gametoUpdate = repository.Get(id);
             if (gametoUpdate is null)
             {
                 // Restituisco risposta REST: 404 Not Found
@@ -93,6 +76,10 @@ public static class GamesEndpoints
             gametoUpdate.Price = updatedGame.Price;
             gametoUpdate.ReleaseDate = updatedGame.ReleaseDate;
             gametoUpdate.ImageURI = updatedGame.ImageURI;
+
+            // Aggiorno il gioco all'interno della repository
+            repository.Update(gametoUpdate);
+
             // Restituisco risposta REST: 204 No Content
             return Results.NoContent();
         });
@@ -100,11 +87,13 @@ public static class GamesEndpoints
         // DELETE /games/{id}: Elimina il gioco con id = {id}
         group.MapDelete("/{id}", (int id) => {
             // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
-            Game? gameToDelete = games.Find(game => game.Id == id);
+            //Game? gameToDelete = games.Find(game => game.Id == id);
+            Game? gameToDelete = repository.Get(id);
             if (gameToDelete is not null)
             {
                 // Elimino il gioco trovato
-                games.Remove(gameToDelete);
+                // games.Remove(gameToDelete);
+                repository.Delete(id);
             }
             // Restituisco risposta REST: 204 No Content
             // Che trovi il gioco o meno, la risposta è sempre la stessa

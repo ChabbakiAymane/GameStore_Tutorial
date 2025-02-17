@@ -8,4 +8,7 @@ var app = builder.Build();
 // Importo il namespace Gamestore.Api.Endpoints
 app.MapGamesEndpoints();
 
+// Sistemo il progetto per dargli una struttura adatta a repository pattern
+// Creo cartella Repositories -> InMemGameRepository.cs e ci copio la lista di giochi da GameEndpoints
+
 app.Run();
