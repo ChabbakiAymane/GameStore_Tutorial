@@ -1,4 +1,5 @@
-// Indentazione: ctrl+. -> Convert to file scoped namespace 
+// Indentazione: ctrl+. -> Convert to file scoped namespace
+// Aggiungo il modulo DataAnnotations per usare le annotazioni sui dati
 using System.ComponentModel.DataAnnotations;
 
 namespace Gamestore.Api.Entities;
@@ -18,12 +19,16 @@ public class Game
     [Required]
     [StringLength(50)]
     public required string Name { get; set; }
+
     [Required]
     [StringLength(20)]
     public required string Genre { get; set; }
-    [Range(0.01, 99.99)]
+
+    [Range(1, 100)]
     public decimal Price { get; set; }
+
     public DateTime ReleaseDate { get; set; }
+
     [Url]
     [StringLength(100)]
     public required string ImageURI { get; set; }

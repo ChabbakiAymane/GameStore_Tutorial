@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v9.0": {
       "Gamestore.Api/1.0.0": {
         "dependencies": {
-          "MinimalApis.Extensions": "0.10.0"
+          "MinimalApis.Extensions": "0.10.1"
         },
         "runtime": {
           "Gamestore.Api.dll": {}
@@ -22,23 +22,23 @@
           }
         }
       },
-      "MinimalApis.Extensions/0.10.0": {
+      "MinimalApis.Extensions/0.10.1": {
         "dependencies": {
           "Microsoft.OpenApi": "1.4.3",
-          "MiniValidation": "0.7.0"
+          "MiniValidation": "0.7.2"
         },
         "runtime": {
           "lib/net7.0/MinimalApis.Extensions.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
+            "assemblyVersion": "0.10.1.0",
+            "fileVersion": "0.10.1.0"
           }
         }
       },
-      "MiniValidation/0.7.0": {
+      "MiniValidation/0.7.2": {
         "runtime": {
           "lib/net6.0/MiniValidation.dll": {
-            "assemblyVersion": "0.7.0.0",
-            "fileVersion": "0.7.0.0"
+            "assemblyVersion": "0.7.2.0",
+            "fileVersion": "0.7.2.0"
           }
         }
       }
@@ -57,19 +57,19 @@
       "path": "microsoft.openapi/1.4.3",
       "hashPath": "microsoft.openapi.1.4.3.nupkg.sha512"
     },
-    "MinimalApis.Extensions/0.10.0": {
+    "MinimalApis.Extensions/0.10.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-7OJvIAt5Sh6shVP9vYq2gv1F4pc+aCI4Mn4oH30b7hZGnpKHmmp+OSBUXiJ7CDOyj4fs7OBi/7xIKYMuDzQx/Q==",
-      "path": "minimalapis.extensions/0.10.0",
-      "hashPath": "minimalapis.extensions.0.10.0.nupkg.sha512"
+      "sha512": "sha512-1TAhHOVW+JY6nEqpq8anQSRCwLk7b9SKZg0TAkuEmHDdOTMEz4yBS0x7EM32V0313/vaBFhnrgotgjeizzF/nA==",
+      "path": "minimalapis.extensions/0.10.1",
+      "hashPath": "minimalapis.extensions.0.10.1.nupkg.sha512"
     },
-    "MiniValidation/0.7.0": {
+    "MiniValidation/0.7.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-zUEbVoLQVaywGqTmgAjzKsYGLMAGADkYXNw+VMOKpoLxip3dYEnpOHhHXycRvqOAbNc2HOr1jODt0lkUDPG5wQ==",
-      "path": "minivalidation/0.7.0",
-      "hashPath": "minivalidation.0.7.0.nupkg.sha512"
+      "sha512": "sha512-5OVWsUw6q5doL63Ki7JdlXD62C5N1eO7YNxxbIdN7nQk53l10juVkFSYoKFmLenL8qpNmoyU6OwEr4MulaibBw==",
+      "path": "minivalidation/0.7.2",
+      "hashPath": "minivalidation.0.7.2.nupkg.sha512"
     }
   }
 }
