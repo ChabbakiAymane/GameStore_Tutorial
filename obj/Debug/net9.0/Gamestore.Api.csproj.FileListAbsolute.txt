@@ -27,3 +27,9 @@ C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\
 C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.genruntimeconfig.cache
 C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\ref\Gamestore.Api.dll
 C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.sourcelink.json
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\bin\Debug\net9.0\MinimalApis.Extensions.dll
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\bin\Debug\net9.0\MiniValidation.dll
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.csproj.AssemblyReference.cache
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestore.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Ayman\Desktop\CHABBY\CyberChabby\DotNet\GameStore_v3_new\Gamestore.Api\obj\Debug\net9.0\Gamestor.50A12C2D.Up2Date

@@ -36,7 +36,8 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
 // Utilizzo GROUPS per raggruppare gli ENDPOINTS
-var group = app.MapGroup("/games");
+// Aggiunta MinimalApis.Extensions, la abilito per il group tramite WithParameterValidation()
+var group = app.MapGroup("/games").WithParameterValidation();
 
 // Definizione di ENDPOINTS
 // GET /games: Restituisce la lista di tutti i giochi
