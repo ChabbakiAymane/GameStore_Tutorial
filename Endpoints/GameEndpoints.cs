@@ -82,26 +82,26 @@ public static class GamesEndpoints
         // PUT /games/{id}: Aggiorna il gioco con id = {id}
         // Faccio injection della repository IGamesRepository
         // Non passo più Game updatedGame, ma UpdateGameDto updatedGame
-        group.MapPut("/{id}", (IGamesRepository repository, int id, UpdateGameDto updatedGame) => 
+        group.MapPut("/{id}", (IGamesRepository repository, int id, UpdateGameDto updatedGameDto) => 
         {
             // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
             // Game? gametoUpdate = games.Find(game => game.Id == id);
-            Game? gametoUpdate = repository.Get(id);
-            if (gametoUpdate is null)
+            Game? gameToUpdate = repository.Get(id);
+            if (gameToUpdate is null)
             {
                 // Restituisco risposta REST: 404 Not Found
                 return Results.NotFound();
                 // Altrimenti posso crearlo qua se non esiste, da gestire con DB per ID corretto
             }
             // Aggiorno il gioco trovato con i nuovi dati
-            gametoUpdate.Name = updatedGame.Name;
-            gametoUpdate.Genre = updatedGame.Genre;
-            gametoUpdate.Price = updatedGame.Price;
-            gametoUpdate.ReleaseDate = updatedGame.ReleaseDate;
-            gametoUpdate.ImageURI = updatedGame.ImageURI;
+            gameToUpdate.Name = updatedGameDto.Name;
+            gameToUpdate.Genre = updatedGameDto.Genre;
+            gameToUpdate.Price = updatedGameDto.Price;
+            gameToUpdate.ReleaseDate = updatedGameDto.ReleaseDate;
+            gameToUpdate.ImageURI = updatedGameDto.ImageURI;
 
             // Aggiorno il gioco all'interno della repository
-            repository.Update(gametoUpdate);
+            repository.Update(gameToUpdate);
 
             // Restituisco risposta REST: 204 No Content
             return Results.NoContent();

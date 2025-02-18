@@ -23,6 +23,29 @@ app.MapGamesEndpoints();
 // DTO specifica un contratto su come deve avvenire (aspettative/requisiti) lo scambio di dati tra Server e Client
 
 // Ora utilizzo Docker per creare un'immagine dell'applicazione per il link al database SQL Server
-// CLI -> docker pull mcr.microsoft.com/mssql/server
+// Devo installare Docker Desktop (https://docs.docker.com/get-started/get-docker/)
+// Docker SQL Server image: https://hub.docker.com/r/microsoft/mssql-server
+// $sa_password="Pass(w)ord1" -> password per l'utente SA inserita nel terminale
+// Eseguo il comando docker run [vedi README.md] per creare il container SQL Server
+// Mi connetto al SQL Server tramite l'estensione SQL Server di Visual Studio Code (add connection, ecc...)
+// Non ha senso mettere qua i parametri di connessione al DB perchè cambiano, meglio usare .net configuration in appsettings.json:
+//   "ConnectionStrings:{
+//      "GameStoreContext":"Server=localhost;
+//      Database=GameStore;
+//      User Id=sa;
+//      Password=PASSWORD-GOES-HERE; 
+//      TrustServerCertificate=True"
+//   }"
+var connString = builder.Configuration.GetConnectionString("GameStoreContext");
+
+// Ora per la gestione delle password andiamo ad utilizzare .NET Secret Manager
+// Secret Management:
+// - Permette di gestire in modo sicuro le password e le chiavi di accesso
+// - terminal -> dotnet user-secrets init -> inizializza il file di configurazione per le secret
+// - in Gamestore.Api.csproj ottengo il UserSecretsId
+// Da terminale, imposto il valore di $sa_password="Pass(w)ord1" ed eseguo il comando dotnet user-secrets set [vedi README.md]
+// Con dotnet user-secrets list: posso vedere tutte le secret impostate
+// Una volta fatto, posso eliminare la stringa di connessione dal file appsettings.json
+
 
 app.Run();
