@@ -22,5 +22,7 @@ app.MapGamesEndpoints();
 // il Server invii dati che rompono il Client o dati di cui non ha bisogno (es. ID)
 // DTO specifica un contratto su come deve avvenire (aspettative/requisiti) lo scambio di dati tra Server e Client
 
+// Ora utilizzo Docker per creare un'immagine dell'applicazione per il link al database SQL Server
+// CLI -> docker pull mcr.microsoft.com/mssql/server
 
 app.Run();
