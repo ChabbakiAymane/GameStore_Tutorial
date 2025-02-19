@@ -1,0 +1,3 @@
+# Ignora i file specifici
+obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
+obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
