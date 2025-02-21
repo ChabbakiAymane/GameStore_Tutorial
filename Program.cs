@@ -3,6 +3,11 @@ using Gamestore.Api.Endpoints;
 using Gamestore.Api.Entities;
 using Gamestore.Api.Repositories;
 
+// Ctrl + b -> Mostra/Nasconde barra laterale Explorer
+// ctrl + q -> Mostra/Nasconde barra di ricerca
+// Ctrl + Shift + p -> Mostra/Nasconde barra comandi
+// Ctrl + Shift + ` -> Apri terminale integrato
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Aggiungo servizi al container di dependency injection
@@ -45,7 +50,8 @@ app.MapGamesEndpoints();
 //  - dotnet tool install --global dotnet-ef (tool per la migrazione)
 // NuGet-package che genera automaticamente i file di migrazione per un database:
 //  - dotnet add package Microsoft.EntityFrameworkCore.Design
-
+// Per generare la prima Migration:
+//  - dotnet ef migrations add InitialCreate --output-dir Data\Migrations
 
 
 app.Run();
