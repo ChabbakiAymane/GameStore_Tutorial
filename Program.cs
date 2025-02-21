@@ -69,6 +69,11 @@ app.MapGamesEndpoints();
 
 // Generata la Migration, ora per risolvere il problema della precisione del tipo decimal
 // Usiamo Entity Type Configuration per configurare il tipo decimal
-// Creo una cartella Configurations -> GameConfiguration.cs
+// Creo una cartella Data -> Configurations -> GameConfiguration.cs
+// Implemento l'interfaccia IEntityTypeConfiguration<T> per rendere la classe una configurazione di Entity Type Framework
+// Vado su GameStoreContext e aggiungo la configurazione
+
+// Applico la Migration:
+// - dotnet ef database update
 
 app.Run();

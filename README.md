@@ -20,6 +20,13 @@ docker ps
 docker stop mssql
 ```
 
+## Init **Secret Manager**
+
+```powershell
+# Init Secret Manager that creates a USERSecretsId in the .csproj file
+dotnet user-secrets init
+```
+
 ## Setting the connection string to **Secret Manager**
 
 ```powershell

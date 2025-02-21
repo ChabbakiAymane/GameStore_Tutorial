@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gamestore.Api.Data;
 
-// Per poter usare il Enity Framework Core, devo creare una classe che estende DbContext
+// Per poter usare il Entity Framework Core, devo creare una classe che estende DbContext
 // DbContext è la classe principale di Entity Framework Core, rappresenta il contesto di un DB
 // e consente di eseguire query e salvare dati
 public class GameStoreContext : DbContext
