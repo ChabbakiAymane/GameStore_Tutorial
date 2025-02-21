@@ -3,10 +3,21 @@ using Gamestore.Api.Endpoints;
 using Gamestore.Api.Entities;
 using Gamestore.Api.Repositories;
 
-// Ctrl + b -> Mostra/Nasconde barra laterale Explorer
-// ctrl + q -> Mostra/Nasconde barra di ricerca
-// Ctrl + Shift + p -> Mostra/Nasconde barra comandi
-// Ctrl + Shift + ` -> Apri terminale integrato
+/*  
+# Shortcut Visual Studio Code:
+    - Ctrl + b -> Mostra/Nasconde barra laterale Explorer
+    - Ctrl + q -> Mostra/Nasconde barra di ricerca
+    - Ctrl + Shift + ` -> Apri terminale integrato
+    - Ctrl + Shift + p -> Mostra/Nasconde barra comandi
+
+# Git Commands:
+    - git rm -r --cached obj/ rimuoviamo la cartella obj (compresi file e sottocartelle) dalla repository
+    - git stash: nasconde le modifiche non committate
+    - git stash pop: riapplica le modifiche nascoste
+    - git reset --hard: cancella tutte le modifiche non committate
+    - git clean -fd: rimuove i file non tracciati e le cartelle vuote
+    - git clean -f -x -d: rimuove i file non tracciati, le cartelle vuote e i file ignorati (forzando)
+*/
 
 var builder = WebApplication.CreateBuilder(args);
 

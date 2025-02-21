@@ -1,19 +1,4 @@
-# Ignora i file specifici
-# obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
-# obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
-
 # Ignora cartella & contenuto di /bin e /obj
-/obj
-/bin
-/Data/Migrations
 bin/
 obj/
 Data/Migrations/
-
-# Con il comando:
-#   - git rm -r --cached obj/ rimuoviamo la cartella obj (compresi file e sottocartelle) dalla repository
-#   - git stash: nasconde le modifiche non committate
-#   - git stash pop: riapplica le modifiche nascoste
-#   - git reset --hard: cancella tutte le modifiche non committate
-#   - git clean -fd: rimuove i file non tracciati e le cartelle vuote
-#   - git clean -f -x -d: rimuove i file non tracciati, le cartelle vuote e i file ignorati (forzando)
