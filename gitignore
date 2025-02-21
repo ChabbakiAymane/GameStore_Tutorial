@@ -3,7 +3,7 @@ obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
 obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
 
 # Ignora la cartella bin
-/bin
+/bin/
 
 # Ignora la cartella obj
-/obj
+/obj/
