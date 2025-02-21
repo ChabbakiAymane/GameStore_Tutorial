@@ -3,10 +3,11 @@
 # obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
 
 # Ignora cartella & contenuto di /bin e /obj
+/obj
+/bin
+/Data/Migrations
 bin/
 obj/
-
-# Ignora cartella & contenuto di /Data/Migrations
 Data/Migrations/
 
 # Con il comando:
