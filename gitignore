@@ -1,23 +1,15 @@
 # Ignora i file specifici
-obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
-obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
+# obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
+# obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
 
-# Ignora la cartella bin
-/bin
-# Ignora contenuto della cartella bin
+# Ignora cartella & contenuto di /bin e /obj
 bin/
-
-# Ignora la cartella obj
-/obj
-# Ignora contenuto cartella obj
 obj/
 
-# Ignora contenuto cartella Data/Migrations
-/Data/Migrations
-# Ignora contenuto cartella Data/Migrations
+# Ignora cartella & contenuto di /Data/Migrations
 Data/Migrations/
 
-# Con il comando: 
+# Con il comando:
 #   - git rm -r --cached obj/ rimuoviamo la cartella obj (compresi file e sottocartelle) dalla repository
 #   - git stash: nasconde le modifiche non committate
 #   - git stash pop: riapplica le modifiche nascoste
