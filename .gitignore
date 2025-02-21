@@ -1,9 +1,7 @@
 # Ignora cartella & contenuto di /bin e /obj
 bin/
-bin/Debug/
 obj/
-
+bin/Debug
 Data/Migrations/
-
 obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
 obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache

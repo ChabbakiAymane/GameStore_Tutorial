@@ -1,3 +1,4 @@
+using System.Reflection;
 using Gamestore.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,4 +17,14 @@ public class GameStoreContext : DbContext
 
     // L'entità che andremo a gestire è Game
     public DbSet<Game> Games => Set<Game>();
+    
+    // Faccio override di OnModelCreating() per configurare Entity Type Framework con la precisione impostata
+    // in Data/Configurations/GameConfiguration.cs
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Ogni volta che il modello viene creato come parte della Migration
+        // il Context specifica al tool della Migration (ef) che deve applicare la configurazione
+        // definita in GameConfiguration
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }

@@ -67,5 +67,8 @@ app.MapGamesEndpoints();
 // Per generare la prima Migration:
 //  - dotnet ef migrations add InitialCreate --output-dir Data\Migrations
 
+// Generata la Migration, ora per risolvere il problema della precisione del tipo decimal
+// Usiamo Entity Type Configuration per configurare il tipo decimal
+// Creo una cartella Configurations -> GameConfiguration.cs
 
 app.Run();
