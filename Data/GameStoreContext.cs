@@ -14,5 +14,6 @@ public class GameStoreContext : DbContext
     {
     }
 
-    public DbSet<Game> Games { get; set; }
+    // L'entità che andremo a gestire è Game
+    public DbSet<Game> Games => Set<Game>();
 }
