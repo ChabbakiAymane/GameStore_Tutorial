@@ -1,5 +1,6 @@
 # Ignora cartella & contenuto di /bin e /obj
 bin/
+bin/Debug/
 obj/
 
 Data/Migrations/
