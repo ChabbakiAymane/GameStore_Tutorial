@@ -74,6 +74,11 @@ app.MapGamesEndpoints();
 // Vado su GameStoreContext e aggiungo la configurazione
 
 // Applico la Migration:
-// - dotnet ef database update
+// - dotnet ef database update 
+// Prima devo abilitare il Secret Manager per la connessione al DB:
+// - dotnet user-secrets init
+// Poi attivo SQL Server tramite Docker e mi collego:
+// - docker run ...
+// 
 
 app.Run();
