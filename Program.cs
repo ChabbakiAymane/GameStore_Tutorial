@@ -22,5 +22,10 @@ app.MapGamesEndpoints();
 // il Server invii dati che rompono il Client o dati di cui non ha bisogno (es. ID)
 // DTO specifica un contratto su come deve avvenire (aspettative/requisiti) lo scambio di dati tra Server e Client
 
+// Aggiungo Entity Framework Core/DbContext
+// Utilizziamo O/RM (Object-Relational Mapping), tecnica per convertire dati tra un DB-relazionale e Object Oriented Program
+// .NET utilizza come O/RM: Entity Framework Core
+// Aggiungo Entity Framework Core da NuGet: terminal -> dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+// Creo una nuova cartella Data -> GamestoreDbContext.cs
 
 app.Run();
