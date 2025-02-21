@@ -17,6 +17,9 @@ using Gamestore.Api.Repositories;
     - git reset --hard: cancella tutte le modifiche non committate
     - git clean -fd: rimuove i file non tracciati e le cartelle vuote
     - git clean -f -x -d: rimuove i file non tracciati, le cartelle vuote e i file ignorati (forzando)
+    - git restore --staged --worktree . : pristinerà tutti i file che sono stati rimossi in precedenza
+    - git reset HEAD~: Annulla l'ultima commit
+    - git checkout HEAD Program.cs: ripristina il file Program.cs allo stato precedente al commit
 */
 
 var builder = WebApplication.CreateBuilder(args);
