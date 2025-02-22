@@ -1,8 +1,5 @@
 using Gamestore.Api.Data;
 using Gamestore.Api.Endpoints;
-using Gamestore.Api.Entities;
-using Gamestore.Api.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 /*  
 # Shortcut Visual Studio Code:
@@ -28,11 +25,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Aggiungo servizi al container di dependency injection
 // AddScoped: crea un'istanza separata per ogni richiesta HTTP (se aggiungo gioco, non lo vedo in un'altra richiesta)
 // AddSingleton: crea un'unica istanza condivisa per tutta l'applicazione (se aggiungo gioco, lo vedo in un'altra richiesta)
-builder.Services.AddSingleton<IGamesRepository, InMemGameRepository>();
+// Dopo aver cambiato InMemGameRepository con EntityFrameworkGamesRepository, cambio addSingleton() con addScoped()
+//builder.Services.AddScoped<IGamesRepository, EntityFrameworkGamesRepository>();
 
-var connString = builder.Configuration.GetConnectionString("GameStoreContext");
+// Sposto tutto quello che riguarda la connessione al DB in DataExtensions.cs
+// Aggiungo il metodo AddRepositories() in DataExtensions.cs
+
+//var connString = builder.Configuration.GetConnectionString("GameStoreContext");
+
 // Come fare builder.Services.AddScoped<> solo che AddSqlServer lo fa in automatico
-builder.Services.AddSqlServer<GameStoreContext>(connString);
+//builder.Services.AddSqlServer<GameStoreContext>(connString);
+
+// Dopo aver messo tutto in DataExtensions.cs, posso chiamare il metodo AddRepositories()
+builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
 
@@ -100,5 +105,9 @@ app.MapGamesEndpoints();
 // 
 
 // Ora impostiamo in modo automatico la Migration al momento dello startup dell'applicazione
+
+// Nuova classe in Repositories -> EntityFrameworkGamesRepository.cs 
+// Per poter usare la nuova classe repository devo registrare il servizio nel container di dependency injection
+// cambiando InMemGameRepository con EntityFrameworkGamesRepository
 
 app.Run();
