@@ -2,6 +2,7 @@ using Gamestore.Api.Data;
 using Gamestore.Api.Endpoints;
 using Gamestore.Api.Entities;
 using Gamestore.Api.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 /*  
 # Shortcut Visual Studio Code:
@@ -34,6 +35,16 @@ var connString = builder.Configuration.GetConnectionString("GameStoreContext");
 builder.Services.AddSqlServer<GameStoreContext>(connString);
 
 var app = builder.Build();
+
+/* Migrationi automatiche al momento dello startup dell'applicazione
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>();
+    dbContext.Database.Migrate();
+}*/
+
+// Meglio creare una classe per gestire le Migration (Data -> DataExtensions.cs)
+app.Services.InitializeDb();
 
 // Dopo aver creato Class C# -> GameEndpoints.cs, sposto tutti i endpoint in quella classe
 // Importo il namespace Gamestore.Api.Endpoints
@@ -73,12 +84,21 @@ app.MapGamesEndpoints();
 // Implemento l'interfaccia IEntityTypeConfiguration<T> per rendere la classe una configurazione di Entity Type Framework
 // Vado su GameStoreContext e aggiungo la configurazione
 
-// Applico la Migration:
+// Applico la Migration con un Entity Framework tool:
 // - dotnet ef database update 
+
 // Prima devo abilitare il Secret Manager per la connessione al DB:
 // - dotnet user-secrets init
+// Genero la connectionString:
+// - dotnet user-secrets set ..."
 // Poi attivo SQL Server tramite Docker e mi collego:
 // - docker run ...
+// Faccio la Migration iniziale
+// - dotnet ef migrations add InitialCreate --output-dir Data\Migrations
+// Eseguo la Migration:
+// - dotnet ef database update
 // 
+
+// Ora impostiamo in modo automatico la Migration al momento dello startup dell'applicazione
 
 app.Run();
