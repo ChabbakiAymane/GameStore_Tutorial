@@ -13,11 +13,15 @@ public static class DataExtensions
     }
 
     // Creo nuovo metodo che si occupa della registrazione del repository context
-    public static IServiceCollection AddRepositories(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRepositories(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
     {
         var connString = configuration.GetConnectionString("GameStoreContext");
-        services.AddSqlServer<GameStoreContext>(connString)
-                .AddScoped<IGamesRepository, EntityFrameworkGamesRepository>();
+        services
+            .AddSqlServer<GameStoreContext>(connString)
+            .AddScoped<IGamesRepository, EntityFrameworkGamesRepository>();
         return services;
     }
 }
