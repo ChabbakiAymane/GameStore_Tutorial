@@ -1,25 +1,55 @@
 using Gamestore.Api.Data;
 using Gamestore.Api.Endpoints;
-using Gamestore.Api.Entities;
-using Gamestore.Api.Repositories;
 
-// Ctrl + b -> Mostra/Nasconde barra laterale Explorer
-// ctrl + q -> Mostra/Nasconde barra di ricerca
-// Ctrl + Shift + p -> Mostra/Nasconde barra comandi
-// Ctrl + Shift + ` -> Apri terminale integrato
+/*  
+# Shortcut Visual Studio Code:
+    - Ctrl + b -> Mostra/Nasconde barra laterale Explorer
+    - Ctrl + q -> Mostra/Nasconde barra di ricerca
+    - Ctrl + Shift + ` -> Apri terminale integrato
+    - Ctrl + Shift + p -> Mostra/Nasconde barra comandi
+
+# Git Commands:
+    - git rm -r --cached obj/ rimuoviamo la cartella obj (compresi file e sottocartelle) dalla repository
+    - git stash: nasconde le modifiche non committate
+    - git stash pop: riapplica le modifiche nascoste
+    - git reset --hard: cancella tutte le modifiche non committate
+    - git clean -fd: rimuove i file non tracciati e le cartelle vuote
+    - git clean -f -x -d: rimuove i file non tracciati, le cartelle vuote e i file ignorati (forzando)
+    - git restore --staged --worktree . : pristinerà tutti i file che sono stati rimossi in precedenza
+    - git reset HEAD~: Annulla l'ultima commit
+    - git checkout HEAD Program.cs: ripristina il file Program.cs allo stato precedente al commit
+*/
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Aggiungo servizi al container di dependency injection
 // AddScoped: crea un'istanza separata per ogni richiesta HTTP (se aggiungo gioco, non lo vedo in un'altra richiesta)
 // AddSingleton: crea un'unica istanza condivisa per tutta l'applicazione (se aggiungo gioco, lo vedo in un'altra richiesta)
-builder.Services.AddSingleton<IGamesRepository, InMemGameRepository>();
+// Dopo aver cambiato InMemGameRepository con EntityFrameworkGamesRepository, cambio addSingleton() con addScoped()
+//builder.Services.AddScoped<IGamesRepository, EntityFrameworkGamesRepository>();
 
-var connString = builder.Configuration.GetConnectionString("GameStoreContext");
+// Sposto tutto quello che riguarda la connessione al DB in DataExtensions.cs
+// Aggiungo il metodo AddRepositories() in DataExtensions.cs
+
+//var connString = builder.Configuration.GetConnectionString("GameStoreContext");
+
 // Come fare builder.Services.AddScoped<> solo che AddSqlServer lo fa in automatico
-builder.Services.AddSqlServer<GameStoreContext>(connString);
+//builder.Services.AddSqlServer<GameStoreContext>(connString);
+
+// Dopo aver messo tutto in DataExtensions.cs, posso chiamare il metodo AddRepositories()
+builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
+
+/* Migrationi automatiche al momento dello startup dell'applicazione
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>();
+    dbContext.Database.Migrate();
+}*/
+
+// Meglio creare una classe per gestire le Migration (Data -> DataExtensions.cs)
+app.Services.InitializeDb();
 
 // Dopo aver creato Class C# -> GameEndpoints.cs, sposto tutti i endpoint in quella classe
 // Importo il namespace Gamestore.Api.Endpoints
@@ -53,5 +83,31 @@ app.MapGamesEndpoints();
 // Per generare la prima Migration:
 //  - dotnet ef migrations add InitialCreate --output-dir Data\Migrations
 
+// Generata la Migration, ora per risolvere il problema della precisione del tipo decimal
+// Usiamo Entity Type Configuration per configurare il tipo decimal
+// Creo una cartella Data -> Configurations -> GameConfiguration.cs
+// Implemento l'interfaccia IEntityTypeConfiguration<T> per rendere la classe una configurazione di Entity Type Framework
+// Vado su GameStoreContext e aggiungo la configurazione
+
+// Applico la Migration con un Entity Framework tool:
+// - dotnet ef database update 
+
+// Prima devo abilitare il Secret Manager per la connessione al DB:
+// - dotnet user-secrets init
+// Genero la connectionString:
+// - dotnet user-secrets set ..."
+// Poi attivo SQL Server tramite Docker e mi collego:
+// - docker run ...
+// Faccio la Migration iniziale
+// - dotnet ef migrations add InitialCreate --output-dir Data\Migrations
+// Eseguo la Migration:
+// - dotnet ef database update
+// 
+
+// Ora impostiamo in modo automatico la Migration al momento dello startup dell'applicazione
+
+// Nuova classe in Repositories -> EntityFrameworkGamesRepository.cs 
+// Per poter usare la nuova classe repository devo registrare il servizio nel container di dependency injection
+// cambiando InMemGameRepository con EntityFrameworkGamesRepository
 
 app.Run();

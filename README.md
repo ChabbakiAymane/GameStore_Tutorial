@@ -11,13 +11,20 @@ $sa_password = "[SA PASSWORD HERE]";
 # 'sqlvolume=/...': volume will be created in the '/...' directory
 # --rm: container will be removed once it is stopped
 # --name: logical name of the container
-docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$sa_password" -p 1433:1433 -v sqlvolume=/var/opt/mssql --rm --name mssql -d mcr.microsoft.com/mssql/server:2022-latest
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=$sa_password" -p 1433:1433 -v sqlvolume=/var/opt/mssql --rm --name mssql1 -d mcr.microsoft.com/mssql/server:2022-latest
 
 # To check if the container is running
 docker ps
 
 # To stop the container
 docker stop mssql
+```
+
+## Init **Secret Manager**
+
+```powershell
+# Init Secret Manager that creates a USERSecretsId in the .csproj file
+dotnet user-secrets init
 ```
 
 ## Setting the connection string to **Secret Manager**

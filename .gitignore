@@ -1,2 +1,6 @@
+bin/
 obj/
-obj/Debug
+bin/Debug/
+Data/Migrations/
+obj/Debug/net9.0/Gamestore.Api.AssemblyInfo.cs
+obj/Debug/net9.0/Gamestore.Api.AssemblyInfoInputs.cache
