@@ -110,7 +110,7 @@ app.MapGamesEndpoints();
 
 // Modifico il codice in modo da renderlo asincrono
 // In IGamesRepository.cs cambio i metodi in modo da renderli asincroni (aggiungo al nome del metodo: 'async')
-// In EntityFrameworkGamesRepository.cs cambio i metodi in modo da renderli asincroni 
+// In EntityFrameworkGamesRepository.cs cambio i metodi in modo da renderli asincroni
 // aggiungo 'async' al nome del metodo e 'await' dove necessario)
 
 app.Run();
