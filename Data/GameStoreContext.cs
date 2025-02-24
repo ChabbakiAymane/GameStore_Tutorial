@@ -11,13 +11,12 @@ public class GameStoreContext : DbContext
 {
     // Permette alla classe GameStoreContext di ottenere tutti i dati necessari su come connettersi
     // al Database (compreso la connectionString data dal Secret Manager)
-    public GameStoreContext(DbContextOptions<GameStoreContext> options) : base(options)
-    {
-    }
+    public GameStoreContext(DbContextOptions<GameStoreContext> options)
+        : base(options) { }
 
     // L'entità che andremo a gestire è Game
     public DbSet<Game> Games => Set<Game>();
-    
+
     // Faccio override di OnModelCreating() per configurare Entity Type Framework con la precisione impostata
     // in Data/Configurations/GameConfiguration.cs
     protected override void OnModelCreating(ModelBuilder modelBuilder)

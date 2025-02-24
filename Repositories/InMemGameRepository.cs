@@ -8,34 +8,37 @@ public class InMemGameRepository : IGamesRepository
 {
     // Per dargli una struttura da dependency injection, creo una view estraendo l'interfaccia
     // su InMemGameRepository -> ctrl+. -> Extract Interface
-    
+
     // Dichiarazione della lista di giochi in-memory
     private readonly List<Game> games = new()
     {
-        new Game(){
+        new Game()
+        {
             Id = 1,
             Name = "Street Fighter II",
             Genre = "Fighting",
             Price = 19.99M,
             ReleaseDate = new DateTime(1991, 2, 1),
-            ImageURI = "https://placehold.co/100"
+            ImageURI = "https://placehold.co/100",
         },
-        new Game(){
+        new Game()
+        {
             Id = 2,
             Name = "Final Fantasy VII",
             Genre = "Fighting",
             Price = 39.99M,
             ReleaseDate = new DateTime(2010, 9, 3),
-            ImageURI = "https://placehold.co/100"
+            ImageURI = "https://placehold.co/100",
         },
-        new Game(){
+        new Game()
+        {
             Id = 3,
             Name = "FIFA 23",
             Genre = "Sports",
             Price = 29.99M,
             ReleaseDate = new DateTime(2022, 9, 27),
-            ImageURI = "https://placehold.co/100"
-        }
+            ImageURI = "https://placehold.co/100",
+        },
     };
 
     // Definisco i metodi di InMemGameRepository

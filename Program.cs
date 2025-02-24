@@ -1,30 +1,28 @@
 using Gamestore.Api.Data;
 using Gamestore.Api.Endpoints;
 
-/*  
-# Shortcut Visual Studio Code:
-    - Ctrl + b -> Mostra/Nasconde barra laterale Explorer
-    - Ctrl + q -> Mostra/Nasconde barra di ricerca
-    - Ctrl + Shift + ` -> Apri terminale integrato
-    - Ctrl + Shift + p -> Mostra/Nasconde barra comandi
+// Shortcut Visual Studio Code:
+//  - Ctrl + b -> Mostra/Nasconde barra laterale Explorer
+//  - Ctrl + q -> Mostra/Nasconde barra di ricerca
+//  - Ctrl + Shift + ` -> Apri terminale integrato
+//  - Ctrl + Shift + p -> Mostra/Nasconde barra comandi
 
-# Git Commands:
-    - git rm -r --cached obj/ rimuoviamo la cartella obj (compresi file e sottocartelle) dalla repository
-    - git stash: nasconde le modifiche non committate
-    - git stash pop: riapplica le modifiche nascoste
-    - git reset --hard: cancella tutte le modifiche non committate
-    - git clean -fd: rimuove i file non tracciati e le cartelle vuote
-    - git clean -f -x -d: rimuove i file non tracciati, le cartelle vuote e i file ignorati (forzando)
-    - git restore --staged --worktree . : pristinerà tutti i file che sono stati rimossi in precedenza
-    - git reset HEAD~: Annulla l'ultima commit
-    - git checkout HEAD Program.cs: ripristina il file Program.cs allo stato precedente al commit
-*/
+// Git Commands:
+//  - git rm -r --cached obj/ rimuoviamo la cartella obj (compresi file e sottocartelle) dalla repository
+//  - git stash: nasconde le modifiche non committate
+//  - git stash pop: riapplica le modifiche nascoste
+//  - git reset --hard: cancella tutte le modifiche non committate
+//  - git clean -fd: rimuove i file non tracciati e le cartelle vuote
+//  - git clean -f -x -d: rimuove i file non tracciati, le cartelle vuote e i file ignorati (forzando)
+//  - git restore --staged --worktree . : pristinerà tutti i file che sono stati rimossi in precedenza
+//  - git reset HEAD~: Annulla l ultima commit
+//  - git checkout HEAD Program.cs: ripristina il file Program.cs allo stato precedente al commit
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Aggiungo servizi al container di dependency injection
-// AddScoped: crea un'istanza separata per ogni richiesta HTTP (se aggiungo gioco, non lo vedo in un'altra richiesta)
-// AddSingleton: crea un'unica istanza condivisa per tutta l'applicazione (se aggiungo gioco, lo vedo in un'altra richiesta)
+// AddScoped: crea un istanza separata per ogni richiesta HTTP (se aggiungo gioco, non lo vedo in un altra richiesta)
+// AddSingleton: crea un unica istanza condivisa per tutta l applicazione (se aggiungo gioco, lo vedo in un altra richiesta)
 // Dopo aver cambiato InMemGameRepository con EntityFrameworkGamesRepository, cambio addSingleton() con addScoped()
 //builder.Services.AddScoped<IGamesRepository, EntityFrameworkGamesRepository>();
 
@@ -41,7 +39,7 @@ builder.Services.AddRepositories(builder.Configuration);
 
 var app = builder.Build();
 
-/* Migrationi automatiche al momento dello startup dell'applicazione
+/* Migrationi automatiche al momento dello startup dell applicazione
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>();
@@ -71,7 +69,7 @@ app.MapGamesEndpoints();
 // Aggiungo il GameStoreContext al service provider tramite AddSqlServer
 // che ci permette di registrarlo con la connectionString
 
-// I file di migrazione automatizzano l'evoluzione della struttura del database senza dover scrivere manualmente query SQL:
+// I file di migrazione automatizzano l evoluzione della struttura del database senza dover scrivere manualmente query SQL:
 //   - File che registra le modifiche alla struttura di un database in modo programmato e tracciabile.
 //   - Permette di versionare il database, mantenendo un registro delle modifiche.
 //   - Permette operazione di rollback.
@@ -86,11 +84,11 @@ app.MapGamesEndpoints();
 // Generata la Migration, ora per risolvere il problema della precisione del tipo decimal
 // Usiamo Entity Type Configuration per configurare il tipo decimal
 // Creo una cartella Data -> Configurations -> GameConfiguration.cs
-// Implemento l'interfaccia IEntityTypeConfiguration<T> per rendere la classe una configurazione di Entity Type Framework
+// Implemento l interfaccia IEntityTypeConfiguration<T> per rendere la classe una configurazione di Entity Type Framework
 // Vado su GameStoreContext e aggiungo la configurazione
 
 // Applico la Migration con un Entity Framework tool:
-// - dotnet ef database update 
+// - dotnet ef database update
 
 // Prima devo abilitare il Secret Manager per la connessione al DB:
 // - dotnet user-secrets init
@@ -102,11 +100,11 @@ app.MapGamesEndpoints();
 // - dotnet ef migrations add InitialCreate --output-dir Data\Migrations
 // Eseguo la Migration:
 // - dotnet ef database update
-// 
+//
 
-// Ora impostiamo in modo automatico la Migration al momento dello startup dell'applicazione
+// Ora impostiamo in modo automatico la Migration al momento dello startup dell applicazione
 
-// Nuova classe in Repositories -> EntityFrameworkGamesRepository.cs 
+// Nuova classe in Repositories -> EntityFrameworkGamesRepository.cs
 // Per poter usare la nuova classe repository devo registrare il servizio nel container di dependency injection
 // cambiando InMemGameRepository con EntityFrameworkGamesRepository
 
