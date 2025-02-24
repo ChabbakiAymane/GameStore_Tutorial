@@ -60,21 +60,27 @@ public class InMemGameRepository : IGamesRepository
     // @ void Create(Game game): crea un nuovo gioco e lo aggiunge alla lista
     public async Task CreateAsync(Game newGame)
     {
-        await Task.FromResult(newGame.Id = games.Max(game => game.Id) + 1);
+        newGame.Id = games.Max(game => game.Id) + 1;
         games.Add(newGame);
+
+        await Task.CompletedTask;
     }
 
     // @ void Update(Game game): aggiorna il gioco con id = {id} con il nuovo gioco
     public async Task UpdateAsync(Game updatedGame)
     {
-        var index = await Task.FromResult((games.FindIndex(game => game.Id == updatedGame.Id)));
+        var index = games.FindIndex(game => game.Id == updatedGame.Id);
         games[index] = updatedGame;
+
+        await Task.CompletedTask;
     }
 
     // @ void Delete(int id): elimina il gioco con id = {id} dalla lista
     public async Task DeleteAsync(int id)
     {
-        var index = await Task.FromResult(games.FindIndex(game => game.Id == id));
+        var index = games.FindIndex(game => game.Id == id);
         games.RemoveAt(index);
+
+        await Task.CompletedTask;
     }
 }

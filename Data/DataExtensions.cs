@@ -5,11 +5,12 @@ namespace Gamestore.Api.Data;
 
 public static class DataExtensions
 {
-    public static void InitializeDb(this IServiceProvider serviceProvider)
+    public static async Task InitializeDbAsync(this IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<GameStoreContext>();
-        dbContext.Database.Migrate();
+        // Rendo la chiamata asincrona
+        await dbContext.Database.MigrateAsync();
     }
 
     // Creo nuovo metodo che si occupa della registrazione del repository context

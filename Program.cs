@@ -47,7 +47,7 @@ using (var scope = app.Services.CreateScope())
 }*/
 
 // Meglio creare una classe per gestire le Migration (Data -> DataExtensions.cs)
-app.Services.InitializeDb();
+await app.Services.InitializeDbAsync();
 
 // Dopo aver creato Class C# -> GameEndpoints.cs, sposto tutti i endpoint in quella classe
 // Importo il namespace Gamestore.Api.Endpoints
@@ -109,8 +109,15 @@ app.MapGamesEndpoints();
 // cambiando InMemGameRepository con EntityFrameworkGamesRepository
 
 // Modifico il codice in modo da renderlo asincrono
-// In IGamesRepository.cs cambio i metodi in modo da renderli asincroni (aggiungo al nome del metodo: 'async')
-// In EntityFrameworkGamesRepository.cs cambio i metodi in modo da renderli asincroni
-// aggiungo 'async' al nome del metodo e 'await' dove necessario)
+// In IGamesRepository.cs, EntityFrameworkGamesRepository.cs e InMemGameRepository cambio i metodi in modo da
+// renderli asincroni:
+//  - aggiungo al nome del metodo: 'Async'
+//  - aggiungo keyword 'async' e 'await'
+//  - cambio il tipo di ritorno in Task
+//  - InMemGameRepository devo usare Task.FromResult() | Task.CompletedTask per restituire il risultato
+
+// Ora devo modificare anche GameEndpoints.cs per renderlo asincrono
+
+// Modifico anche DataExtensions.cs per renderlo asincrono (InitializeDb -> InitializeDbAsync)
 
 app.Run();

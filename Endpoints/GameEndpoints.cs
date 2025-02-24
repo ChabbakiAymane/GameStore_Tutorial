@@ -36,20 +36,20 @@ public static class GamesEndpoints
         // Una volta creati i metodi di conversione GameEntity in DTO-Entity, posso usare AsDto()
         group.MapGet(
             "/",
-            (IGamesRepository repository) =>
+            async (IGamesRepository repository) =>
                 // Prendo tutti i giochi, uno alla volta, e li converto in DTO
-                repository.GetAllAsync().Select(game => game.AsDto())
+                (await repository.GetAllAsync()).Select(game => game.AsDto())
         );
 
         // GET /games/{id}: Restituisce il gioco con id = {id}
         group
             .MapGet(
                 "/{id}",
-                (IGamesRepository repository, int id) =>
+                async (IGamesRepository repository, int id) =>
                 {
                     // Cerco il gioco con id = {id} (se non presente, con ? accetto null)
                     // Game? gametoFind = games.Find(game => game.Id == id);
-                    Game? gametoFind = repository.GetAsync(id);
+                    Game? gametoFind = await repository.GetAsync(id);
                     // Restituisco il gioco come DTO
                     return gametoFind is not null
                         ? Results.Ok(gametoFind.AsDto())
@@ -72,7 +72,7 @@ public static class GamesEndpoints
         // Non passo più Game GameCreated, ma CreateGameDto gameDto
         group.MapPost(
             "/",
-            (IGamesRepository repository, CreateGameDto gameDto) =>
+            async (IGamesRepository repository, CreateGameDto gameDto) =>
             {
                 // Devo costruire un Game Entity a partire da un gameDto
                 Game GameCreated = new()
@@ -86,7 +86,7 @@ public static class GamesEndpoints
                 // Tra tutti i giochi, trovo id più grande e lo incremento
                 // GameCreated.Id = games.Max(game => game.Id) + 1;
                 // games.Add(GameCreated);
-                repository.CreateAsync(GameCreated);
+                await repository.CreateAsync(GameCreated);
                 // Restituisco risposta REST: 201 Created
                 // Restituisco l'entità restituita dalla chiamata all'endpoint /games/{id}
                 return Results.CreatedAtRoute(
@@ -102,11 +102,11 @@ public static class GamesEndpoints
         // Non passo più Game updatedGame, ma UpdateGameDto updatedGame
         group.MapPut(
             "/{id}",
-            (IGamesRepository repository, int id, UpdateGameDto updatedGame) =>
+            async (IGamesRepository repository, int id, UpdateGameDto updatedGame) =>
             {
                 // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
                 // Game? gametoUpdate = games.Find(game => game.Id == id);
-                Game? gametoUpdate = repository.GetAsync(id);
+                Game? gametoUpdate = await repository.GetAsync(id);
                 if (gametoUpdate is null)
                 {
                     // Restituisco risposta REST: 404 Not Found
@@ -121,7 +121,7 @@ public static class GamesEndpoints
                 gametoUpdate.ImageURI = updatedGame.ImageURI;
 
                 // Aggiorno il gioco all'interno della repository
-                repository.UpdateAsync(gametoUpdate);
+                await repository.UpdateAsync(gametoUpdate);
 
                 // Restituisco risposta REST: 204 No Content
                 return Results.NoContent();
@@ -132,16 +132,16 @@ public static class GamesEndpoints
         // Faccio injection della repository IGamesRepository
         group.MapDelete(
             "/{id}",
-            (IGamesRepository repository, int id) =>
+            async (IGamesRepository repository, int id) =>
             {
                 // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
                 //Game? gameToDelete = games.Find(game => game.Id == id);
-                Game? gameToDelete = repository.GetAsync(id);
+                Game? gameToDelete = await repository.GetAsync(id);
                 if (gameToDelete is not null)
                 {
                     // Elimino il gioco trovato
                     // games.Remove(gameToDelete);
-                    repository.DeleteAsync(id);
+                    await repository.DeleteAsync(id);
                 }
                 // Restituisco risposta REST: 204 No Content
                 // Che trovi il gioco o meno, la risposta è sempre la stessa
