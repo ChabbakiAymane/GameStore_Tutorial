@@ -45,33 +45,33 @@ public class InMemGameRepository : IGamesRepository
     // @ IEnumerable<Game> GetAll():
     //  - Restituisce la lista di tutti i giochi
     //  - IEnumerable<Game> tipo di dato generico iterabile di tipo Game
-    public IEnumerable<Game> GetAll()
+    public IEnumerable<Game> GetAllAsync()
     {
         return games;
     }
 
     // @ Game? Get(int id): cerca il gioco con id = {id} (se non presente, restituisce null)
-    public Game? Get(int id)
+    public Game? GetAsync(int id)
     {
         return games.Find(game => game.Id == id);
     }
 
     // @ void Create(Game game): crea un nuovo gioco e lo aggiunge alla lista
-    public void Create(Game newGame)
+    public void CreateAsync(Game newGame)
     {
         newGame.Id = games.Max(game => game.Id) + 1;
         games.Add(newGame);
     }
 
     // @ void Update(Game game): aggiorna il gioco con id = {id} con il nuovo gioco
-    public void Update(Game updatedGame)
+    public void UpdateAsync(Game updatedGame)
     {
         var index = games.FindIndex(game => game.Id == updatedGame.Id);
         games[index] = updatedGame;
     }
 
     // @ void Delete(int id): elimina il gioco con id = {id} dalla lista
-    public void Delete(int id)
+    public void DeleteAsync(int id)
     {
         var index = games.FindIndex(game => game.Id == id);
         games.RemoveAt(index);

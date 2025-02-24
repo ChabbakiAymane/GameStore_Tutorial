@@ -17,38 +17,39 @@ public class EntityFrameworkGamesRepository : IGamesRepository
     }
 
     // Ora implemento i metodi dell'interfaccia IGamesRepository
-    public IEnumerable<Game> GetAll()
+    public async Task<IEnumerable<Game>> GetAllAsync()
     {
         //throw new NotImplementedException();
-        return dbContext.Games.AsNoTracking().ToList();
+        //return dbContext.Games.AsNoTracking().ToList();
+        return await dbContext.Games.AsNoTracking().ToListAsync();
     }
 
-    public Game? Get(int id)
+    public async Task<Game?> GetAsync(int id)
     {
         //throw new NotImplementedException();
-        return dbContext.Games.Find(id);
+        return await dbContext.Games.FindAsync(id);
     }
 
-    public void Create(Game newGame)
+    public async Task CreateAsync(Game newGame)
     {
         //throw new NotImplementedException();
         // Dice di tenere traccia della nuova entità, nessun codice SQL è eseguito
         dbContext.Games.Add(newGame);
         // Salva le modifiche apportate al database tramite SQL
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
     }
 
-    public void Update(Game updatedGame)
+    public async Task UpdateAsync(Game updatedGame)
     {
         //throw new NotImplementedException();
         dbContext.Games.Update(updatedGame);
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
     }
 
-    public void Delete(int id)
+    public async Task DeleteAsync(int id)
     {
         //throw new NotImplementedException();
         // Batch delete, efficiente per la gestione della memoria
-        dbContext.Games.Where(game => game.Id == id).ExecuteDelete();
+        await dbContext.Games.Where(game => game.Id == id).ExecuteDeleteAsync();
     }
 }

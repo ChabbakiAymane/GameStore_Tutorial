@@ -4,9 +4,11 @@ namespace Gamestore.Api.Repositories;
 
 public interface IGamesRepository
 {
-    void Create(Game newGame);
-    void Delete(int id);
-    Game? Get(int id);
-    IEnumerable<Game> GetAll();
-    void Update(Game updatedGame);
+    // Aggiungo "Async" al nome dei metodi
+    // Cambio il tipo di ritorno in Task
+    Task CreateAsync(Game newGame);
+    Task DeleteAsync(int id);
+    Task<Game?> GetAsync(int id);
+    Task<IEnumerable<Game>> GetAllAsync();
+    Task UpdateAsync(Game updatedGame);
 }
