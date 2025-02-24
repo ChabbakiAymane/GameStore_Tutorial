@@ -38,7 +38,7 @@ public static class GamesEndpoints
             "/",
             (IGamesRepository repository) =>
                 // Prendo tutti i giochi, uno alla volta, e li converto in DTO
-                repository.GetAll().Select(game => game.AsDto())
+                repository.GetAllAsync().Select(game => game.AsDto())
         );
 
         // GET /games/{id}: Restituisce il gioco con id = {id}
@@ -49,7 +49,7 @@ public static class GamesEndpoints
                 {
                     // Cerco il gioco con id = {id} (se non presente, con ? accetto null)
                     // Game? gametoFind = games.Find(game => game.Id == id);
-                    Game? gametoFind = repository.Get(id);
+                    Game? gametoFind = repository.GetAsync(id);
                     // Restituisco il gioco come DTO
                     return gametoFind is not null
                         ? Results.Ok(gametoFind.AsDto())
@@ -86,7 +86,7 @@ public static class GamesEndpoints
                 // Tra tutti i giochi, trovo id più grande e lo incremento
                 // GameCreated.Id = games.Max(game => game.Id) + 1;
                 // games.Add(GameCreated);
-                repository.Create(GameCreated);
+                repository.CreateAsync(GameCreated);
                 // Restituisco risposta REST: 201 Created
                 // Restituisco l'entità restituita dalla chiamata all'endpoint /games/{id}
                 return Results.CreatedAtRoute(
@@ -106,7 +106,7 @@ public static class GamesEndpoints
             {
                 // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
                 // Game? gametoUpdate = games.Find(game => game.Id == id);
-                Game? gametoUpdate = repository.Get(id);
+                Game? gametoUpdate = repository.GetAsync(id);
                 if (gametoUpdate is null)
                 {
                     // Restituisco risposta REST: 404 Not Found
@@ -121,7 +121,7 @@ public static class GamesEndpoints
                 gametoUpdate.ImageURI = updatedGame.ImageURI;
 
                 // Aggiorno il gioco all'interno della repository
-                repository.Update(gametoUpdate);
+                repository.UpdateAsync(gametoUpdate);
 
                 // Restituisco risposta REST: 204 No Content
                 return Results.NoContent();
@@ -136,12 +136,12 @@ public static class GamesEndpoints
             {
                 // Cerco il gioco con id = {id} (se non presente, con '?' accetto null)
                 //Game? gameToDelete = games.Find(game => game.Id == id);
-                Game? gameToDelete = repository.Get(id);
+                Game? gameToDelete = repository.GetAsync(id);
                 if (gameToDelete is not null)
                 {
                     // Elimino il gioco trovato
                     // games.Remove(gameToDelete);
-                    repository.Delete(id);
+                    repository.DeleteAsync(id);
                 }
                 // Restituisco risposta REST: 204 No Content
                 // Che trovi il gioco o meno, la risposta è sempre la stessa
