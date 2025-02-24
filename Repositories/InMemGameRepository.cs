@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Gamestore.Api.Entities;
 
 namespace Gamestore.Api.Repositories;
@@ -45,35 +46,35 @@ public class InMemGameRepository : IGamesRepository
     // @ IEnumerable<Game> GetAll():
     //  - Restituisce la lista di tutti i giochi
     //  - IEnumerable<Game> tipo di dato generico iterabile di tipo Game
-    public IEnumerable<Game> GetAllAsync()
+    public async Task<IEnumerable<Game>> GetAllAsync()
     {
-        return games;
+        return await Task.FromResult(games);
     }
 
     // @ Game? Get(int id): cerca il gioco con id = {id} (se non presente, restituisce null)
-    public Game? GetAsync(int id)
+    public async Task<Game?> GetAsync(int id)
     {
-        return games.Find(game => game.Id == id);
+        return await Task.FromResult(games.Find(game => game.Id == id));
     }
 
     // @ void Create(Game game): crea un nuovo gioco e lo aggiunge alla lista
-    public void CreateAsync(Game newGame)
+    public async Task CreateAsync(Game newGame)
     {
-        newGame.Id = games.Max(game => game.Id) + 1;
+        await Task.FromResult(newGame.Id = games.Max(game => game.Id) + 1);
         games.Add(newGame);
     }
 
     // @ void Update(Game game): aggiorna il gioco con id = {id} con il nuovo gioco
-    public void UpdateAsync(Game updatedGame)
+    public async Task UpdateAsync(Game updatedGame)
     {
-        var index = games.FindIndex(game => game.Id == updatedGame.Id);
+        var index = await Task.FromResult((games.FindIndex(game => game.Id == updatedGame.Id)));
         games[index] = updatedGame;
     }
 
     // @ void Delete(int id): elimina il gioco con id = {id} dalla lista
-    public void DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        var index = games.FindIndex(game => game.Id == id);
+        var index = await Task.FromResult(games.FindIndex(game => game.Id == id));
         games.RemoveAt(index);
     }
 }
