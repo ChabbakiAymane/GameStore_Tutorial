@@ -52,4 +52,17 @@ public class EntityFrameworkGamesRepository : IGamesRepository
         // Batch delete, efficiente per la gestione della memoria
         await dbContext.Games.Where(game => game.Id == id).ExecuteDeleteAsync();
     }
+
+    public async Task<IEnumerable<Game>> SearchGenreAsync(string genre)
+    {
+        return await dbContext
+            .Games.Where(game => game.Genre == genre)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Game>> SearchNameAsync(string title)
+    {
+        return await dbContext.Games.Where(game => game.Name == title).AsNoTracking().ToListAsync();
+    }
 }

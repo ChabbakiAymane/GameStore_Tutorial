@@ -41,6 +41,20 @@ public static class GamesEndpoints
                 (await repository.GetAllAsync()).Select(game => game.AsDto())
         );
 
+        // GET /games/searchName={name}: Restituisce la lista di giochi con genere = {genre}
+        group.MapGet(
+            "/searchName={title}",
+            async (IGamesRepository repository, string title) =>
+                (await repository.SearchNameAsync(title)).Select(game => game.AsDto())
+        );
+
+        // GET /games/searchGenre={genre}: Restituisce la lista di giochi con genere = {genre}
+        group.MapGet(
+            "/searchGenre={genre}",
+            async (IGamesRepository repository, string genre) =>
+                (await repository.SearchGenreAsync(genre)).Select(game => game.AsDto())
+        );
+
         // GET /games/{id}: Restituisce il gioco con id = {id}
         group
             .MapGet(

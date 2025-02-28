@@ -10,5 +10,7 @@ public interface IGamesRepository
     Task DeleteAsync(int id);
     Task<Game?> GetAsync(int id);
     Task<IEnumerable<Game>> GetAllAsync();
+    Task<IEnumerable<Game>> SearchGenreAsync(string genre);
+    Task<IEnumerable<Game>> SearchNameAsync(string title);
     Task UpdateAsync(Game updatedGame);
 }

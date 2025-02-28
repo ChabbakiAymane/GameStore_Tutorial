@@ -83,4 +83,14 @@ public class InMemGameRepository : IGamesRepository
 
         await Task.CompletedTask;
     }
+
+    public async Task<IEnumerable<Game>> SearchGenreAsync(string genre)
+    {
+        return await Task.FromResult(games.Where(game => game.Genre == genre));
+    }
+
+    public async Task<IEnumerable<Game>> SearchNameAsync(string title)
+    {
+        return await Task.FromResult(games.Where(game => game.Name == title));
+    }
 }
